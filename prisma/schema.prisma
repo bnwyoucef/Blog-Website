@@ -6,6 +6,39 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  blogs    Blog[]
+  Profile  Profile?
+}
+
+model Blog {
+  id        Int       @id @default(autoincrement())
+  title     String
+  article   String
+  createdAt DateTime  @default(now())
+  authorId  Int
+  author    User      @relation(fields: [authorId], references: [id])
+  Category  Category?
+}
+
+model Profile {
+  id       Int    @id @default(autoincrement())
+  userName String @default("userName")
+  bio      String
+  userId   Int    @unique
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id     Int    @id @default(autoincrement())
+  name   String
+  userId Int    @unique
+  blog   Blog   @relation(fields: [userId], references: [id])
 }
