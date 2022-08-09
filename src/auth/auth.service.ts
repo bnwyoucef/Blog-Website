@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2'
 import { AuthDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService){}
+    constructor(private prisma: PrismaService,private jwtService: JwtService){}
 
     async signUp(authDto:AuthDto) {
         const hash = await argon.hash(authDto.password);
@@ -18,7 +19,7 @@ export class AuthService {
                 }
             });
             const {password, ...result} = user;
-            return result;
+            return {access_token:this.jwtService.sign(result)};
         } catch (error) {
             return "Email exist!";
         }
@@ -35,7 +36,8 @@ export class AuthService {
         const pswrdMatch = await argon.verify(user.password,authDto.password);
         if(pswrdMatch) {
             const {password, ...result} = user;
-            return result;
+
+            return {access_token:this.jwtService.sign(result)};
         }
         else return "Wrong credential!"
 
