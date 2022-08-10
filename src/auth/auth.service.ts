@@ -19,7 +19,7 @@ export class AuthService {
                 }
             });
             const {password, ...result} = user;
-            return {access_token:this.jwtService.sign(result)};
+            return {access_token:this.jwtService.sign(result)}; 
         } catch (error) {
             return "Email exist!";
         }
