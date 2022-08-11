@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { BlogService } from './blog.service';
-import { BlogDto } from './dto';
+import { BlogDto, BlogUpdateDto } from './dto';
 
 @Controller('blog')
 export class BlogController {
@@ -17,12 +17,12 @@ export class BlogController {
     }
     
     @Delete('deleteBlog')
-    deleteBlog(@Body() id: number) {
-        return this.blogService.deleteBlog(id);
+    deleteBlog(@Body() obj: any) {
+        return this.blogService.deleteBlog(obj.id);
     }
 
     @Patch('updateBlog')
-    updateBlog(@Body() dto:BlogDto) {
+    updateBlog(@Body() dto:BlogUpdateDto) {
         return this.blogService.updateBlog(dto);
     }
 }
