@@ -6,7 +6,7 @@ import { CategoryDto } from './dto';
 export class CategoryService {
     constructor(private prisma: PrismaService){}
 
-    getAllCategories() {
+    async getAllCategories() {
         try {
             const categories = this.prisma.category.findMany();
             return categories;
@@ -15,9 +15,9 @@ export class CategoryService {
         }
     }
 
-    createCategory(categoryName:string) {
+    async createCategory(categoryName:string) {
         try {
-            const category = this.prisma.category.create({
+            const category = await this.prisma.category.create({
                 data: {
                     name:categoryName
                 }
@@ -28,9 +28,9 @@ export class CategoryService {
         }
     }
 
-    deleteCategory(id:number) {
+    async deleteCategory(id:number) {
         try {
-            const category = this.prisma.category.delete({
+            const category = await this.prisma.category.delete({
                 where: {
                     id:id
                 }
@@ -41,9 +41,9 @@ export class CategoryService {
         }
     }
 
-    updateCategory(newCateg:CategoryDto) {
+    async updateCategory(newCateg:CategoryDto) {
         try {
-            const category = this.prisma.category.update({
+            const category = await this.prisma.category.update({
                 where: {
                     id:newCateg.id
                 },

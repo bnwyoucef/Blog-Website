@@ -7,8 +7,8 @@ export class CategoryController {
     constructor(private categoryService: CategoryService) {}
 
     @Post('create-category')
-    createCategory(@Body() name: string) {
-        return this.categoryService.createCategory(name);
+    createCategory(@Body() category: any) {
+        return this.categoryService.createCategory(category.name);
     }
 
     @Get('all-categories')
@@ -17,8 +17,8 @@ export class CategoryController {
     }
 
     @Delete('delete-category')
-    deleteCategory(@Body() id: number) {
-        return this.categoryService.deleteCategory(id);
+    deleteCategory(@Body() category: any) {
+        return this.categoryService.deleteCategory(category.id);
     }
 
     @Patch('update-category')
