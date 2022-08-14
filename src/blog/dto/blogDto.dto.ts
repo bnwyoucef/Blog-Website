@@ -7,9 +7,9 @@ export class BlogDto {
     @IsNotEmpty()
     article: string;
     @IsNotEmpty()
-    authorId: number;
+    authorId: string;
     @IsNotEmpty()
-    categoryId: number;
+    categoryId: string;
 }
 
 export class BlogUpdateDto {

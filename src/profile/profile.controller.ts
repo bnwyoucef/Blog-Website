@@ -13,11 +13,12 @@ export class ProfileController {
     }
 
     @Post('upload')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('file'))   
     uploadImage(@UploadedFile() file,@Body() obj:any){
         return this.profileService.storeImageName(file.filename,parseInt(obj.userId));
     }
 
+    //get profile image by the full link and the image name in the end
     @Get('/images/:img_name')
     getImage(@Param('img_name') image:string,@Res() res) {
         return res.sendFile(image, {root: 'uploads'})

@@ -11,19 +11,20 @@ export class BlogService {
         return blogs;
     }
 
-    async createBlog(blogDto: BlogDto) {
+    async createBlog(blogDto: BlogDto,fileName: string) {
         try {
             const blog = await this.prisma.blog.create({
                 data: {
                     title: blogDto.title,
                     article: blogDto.article,
-                    authorId: blogDto.authorId,
-                    categoryId: blogDto.categoryId,
+                    authorId: parseInt(blogDto.authorId),
+                    categoryId: parseInt(blogDto.categoryId),
+                    imageName: fileName
                 }
             })
             return {newBlog:blog};
         } catch (error) {
-            return error;
+            return error.message;
         }
     }
 
