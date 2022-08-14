@@ -35,7 +35,6 @@ export class ProfileService {
     }
 
     async updateUserProfile(newProfile:ProfileDto) {
-        console.log(newProfile);
         
         let updatedProfile = {};
         if(newProfile.userName) {
@@ -68,5 +67,22 @@ export class ProfileService {
             }
         }
         return updatedProfile;  
+    }
+
+    async storeImageName(fileName:string,userId:number) {
+        try {
+            const image = await this.prisma.profile.update({
+                where: {
+                    userId: userId
+                },
+                data:{
+                    imageName: fileName
+                }
+            })
+           return image; 
+        } catch (error) {
+            return error.message;
+        }
+
     }
 }

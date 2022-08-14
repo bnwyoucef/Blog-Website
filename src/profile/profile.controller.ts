@@ -14,13 +14,12 @@ export class ProfileController {
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
-    uploadImage(@UploadedFile() file){
-        console.log(file);
+    uploadImage(@UploadedFile() file,@Body() obj:any){
+        return this.profileService.storeImageName(file.filename,parseInt(obj.userId));
     }
 
     @Get('/images/:img_name')
     getImage(@Param('img_name') image:string,@Res() res) {
-        console.log('testing:',image);
         return res.sendFile(image, {root: 'uploads'})
     }
 

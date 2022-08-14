@@ -27,14 +27,16 @@ model Blog {
   author     User     @relation(fields: [authorId], references: [id])
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
+  imageName  String   @default("null")
 }
 
 model Profile {
-  id       Int    @id @default(autoincrement())
-  userName String @default("userName")
-  bio      String
-  userId   Int    @unique
-  user     User   @relation(fields: [userId], references: [id])
+  id        Int    @id @default(autoincrement())
+  userName  String @default("userName")
+  bio       String
+  imageName String @default("null")
+  userId    Int    @unique
+  user      User   @relation(fields: [userId], references: [id])
 }
 
 model Category {
